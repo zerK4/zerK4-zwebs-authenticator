@@ -1,6 +1,13 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import React, { useEffect } from "react";
+import { NextPage } from "next";
+import "../styles/globals.css";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+const MyApp: NextPage = ({ Component, pageProps }: any) => {
+  return (
+    <div className="bg-black min-h-screen px-4 sm:px-20 md:px-[10rem] xl:px-[20rem] scroll-smooth">
+      <Component {...pageProps} />
+    </div>
+  );
+};
+
+export default MyApp;
