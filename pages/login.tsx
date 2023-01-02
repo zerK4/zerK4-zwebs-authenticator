@@ -38,7 +38,7 @@ const Login: NextPage<Logi> = ({ logged }: any) => {
     };
     if (email && password) {
       const data = await axios.post(
-        "http://localhost:3000/api/auth/login",
+        `/api/auth/login`,
         document
       );
       if (data.data.status === 200) {
@@ -65,13 +65,13 @@ const Login: NextPage<Logi> = ({ logged }: any) => {
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center">
       <Head>
-        <title>zWebs building curve | Login</title>
+        <title>zWebs Auth | Login</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <h1 className="w-full justify-center flex mb-[10rem] text-4xl text-neutral-500">
+      <h1 className="w-full justify-center flex mb-[5rem] text-4xl text-neutral-500">
         Login
       </h1>
-      <form className="flex flex-col gap-2 border-2 border-neutral-900 shadow-md shadow-neutral-500 p-2 text-white">
+      <form className="shadow-md rounded px-8 pt-6 w-full md:w-[25rem] pb-8 mb-4 bg-neutral-900 flex flex-col gap-6 text-white">
         {complete || someIssue ? (
           <div className="flex items-center gap-2">
             <AiOutlineExclamationCircle className="text-red-500 text-4xl" />
@@ -87,18 +87,18 @@ const Login: NextPage<Logi> = ({ logged }: any) => {
         <input
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          className="p-2 w-[25rem] rounded-sm outline-none bg-neutral-800 focus:bg-black border-2 border-transparent focus:border-orange-400 ease-in-out duration-300"
+          className="p-2 w-full rounded outline-none bg-neutral-700 focus:bg-neutral-800 ease-in-out duration-300"
           placeholder="email"
         />
         <input
           onChange={(e) => setPassword(e.target.value)}
           type="password"
-          className="p-2 w-[25rem] rounded-sm outline-none bg-neutral-800 focus:bg-black border-2 border-transparent focus:border-orange-400 ease-in-out duration-300"
+          className="p-2 w-full rounded outline-none bg-neutral-700 focus:bg-neutral-800 ease-in-out duration-300"
           placeholder="password"
         />
         <button
           onClick={(e) => loginHandler(e)}
-          className="border-2 border-neutral-800 p-2 text-white hover:border-orange-400 ease-in-out duration-300"
+          className="bg-neutral-700 hover:bg-neutral-800 rounded p-2 text-white ease-in-out duration-300"
         >
           {isLoading ? (
             <div className="flex justify-center">
@@ -109,11 +109,16 @@ const Login: NextPage<Logi> = ({ logged }: any) => {
           )}
         </button>
         <div className="flex">
-          <div className="text-neutral-500">
+          <div className="text-neutral-500 flex items-center gap-2">
             Would you want to{" "}
+            <div className="flex flex-col">
             <Link href="/register">
-              <button className="text-orange-400">REGISTER</button>?
+              <button className="text-neutral-400 hover:text-neutral-600 ease-in-out duration-300">REGISTER</button>?
             </Link>
+            <Link href="#">
+              <button className="text-neutral-400 hover:text-neutral-600 ease-in-out duration-300">Reset password</button>?
+            </Link>
+            </div>
           </div>
         </div>
       </form>

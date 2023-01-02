@@ -10,7 +10,7 @@ const Header: NextComponentType = () => {
   const [user, setUser] = useState();
 
   const logoutHandler = async () => {
-    const data = await axios.get("http://localhost:3000/api/auth/logout");
+    const data = await axios.get("/api/auth/logout");
     removeUser();
   };
 
@@ -21,31 +21,15 @@ const Header: NextComponentType = () => {
   return (
     <div className="text-white flex justify-between h-[5rem] items-center">
       <div className="logo">zwebs</div>
-      <ul className="nav flex gap-6 items-center">
-        <Link href="#">
-          <li className="opacity-50 hover:opacity-100 ease-in-out duration-300">
-            Home
-          </li>
-        </Link>
-        <Link href="#">
-          <li className="opacity-50 hover:opacity-100 ease-in-out duration-300">
-            Projects
-          </li>
-        </Link>
-        <Link href="#">
-          <li className="opacity-50 hover:opacity-100 ease-in-out duration-300">
-            Contact
-          </li>
-        </Link>
+      
         <Link href={user ? "/" : "/login"}>
           <button
             onClick={() => (user ? logoutHandler() : null)}
-            className="p-2 text-orange-400 opacity-50 hover:opacity-100 duration-300 ease-in-out"
+            className="p-2 text-orange-400 opacity-50 font-bold text-xl hover:opacity-100 duration-300 ease-in-out"
           >
-            {user ? <HiLogout className="text-2xl" /> : "Login"}
+            {user ? "Logout" : "Login"}
           </button>
         </Link>
-      </ul>
     </div>
   );
 };

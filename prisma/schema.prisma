@@ -17,23 +17,6 @@ model User {
   lastName  String
   email     String
   token     String
-  eventCode String
-  posts     Post[]
-}
-
-model Events {
-  id        Int      @id @default(autoincrement())
-  eventName String
-  eventCode String
-  eventDate DateTime
-}
-
-model Post {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  postTitle   String
-  postContent String
-  postImage   String
-  createdAt   DateTime @default(now())
+  avatar    String
+  // posts     Post[]
 }

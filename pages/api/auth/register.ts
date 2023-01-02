@@ -2,7 +2,7 @@ import prisma from "../../../utils/prismaClient";
 import { hash } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function register(req: NextApiRequest, res:NextApiResponse) {
+export default async function register(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const document = await req.body;
     console.log(req.body, "here");
@@ -34,9 +34,9 @@ export default async function register(req: NextApiRequest, res:NextApiResponse)
         .status(200)
         .json({ message: "This username is already registered!", status: 403 });
     } else {
-    /**
-     * Once everything is received the account is created
-     * */
+      /**
+       * Once everything is received the account is created
+       * */
       if (req.body.password !== "" || req.body.eventCode !== "") {
         hash(document.password, 12, async (err, hash) => {
           if (err) {
@@ -48,7 +48,7 @@ export default async function register(req: NextApiRequest, res:NextApiResponse)
                 lastName: document.lastName,
                 username: document.username,
                 email: document.email,
-                eventCode: document.eventCode,
+                avatar: "",
                 token: hash,
               },
             });

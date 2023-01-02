@@ -1,66 +1,43 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import Head from "next/head";
-import Card from "../components/Card.component";
 import Header from "../components/Header.component";
-import PostCard from "../components/PostCard.component";
-import NewPost from "../components/NewPost.component";
-import { AiOutlineClose } from "react-icons/ai";
+import {SiNextdotjs, SiTailwindcss, SiPrisma} from "react-icons/si"
 
 type HomeInter = {
-  thePosts: any;
-  post: any;
-  key: any;
   cookie: any;
 };
 
 const Home = (props: HomeInter) => {
-  const [users, setUsers] = useState<any[]>();
-  const [posts, setPosts] = useState<any[]>();
-  const [newPost, setNewPost] = useState<boolean>(false);
-  useEffect(() => {
-    setPosts(props.thePosts);
-    getUsers();
-    console.log(props.thePosts, "posts");
-  }, [props.thePosts]);
-
-  const newPostHandler = () => {
-    setNewPost(!newPost);
-  };
-
-  const getUsers = async () => {
-    const { data } = await axios({
-      method: "GET",
-      url: "http://localhost:3000/api/users",
-    });
-    console.log(data, "users");
-    setUsers(data);
-  };
 
   return (
     <div className="text-white scroll-smooth pb-10 relative">
       <Head>
-        <title>zWebs building curve | Home</title>
+        <title>zWebs | Auth</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Header />
-      <Card newPostHandler={newPostHandler} />
-      <div className="">
-        {posts?.map((post) => (
-          <PostCard key={post.id} post={post} users={users} />
-        ))}
-        {newPost ? (
-          <div className="absolute bg-white/20 h-screen w-full left-0 top-0 flex items-center justify-center p-10 backdrop-blur-xl">
-            <div
-              onClick={newPostHandler}
-              className="absolute right-10 top-10 bg-black/30 p-2 hover:bg-orange-400/40 ease-in-out duration-300 cursor-pointer"
-            >
-              <AiOutlineClose className="text-xl" />
+      <section className="">
+    <div className="py-8 px-4 mx-auto mt-[10rem] text-center lg:py-16 lg:px-12">
+        <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Authentication package.</h1>
+        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Full authentication package, register, login, logout, using database, cookies and local storage.</p>
+        <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
+        </div>
+        <div className="px-4 mx-auto text-center flex flex-col items-center lg:px-36">
+            <span className="font-semibold text-gray-400 uppercase">tech used</span>
+            <div className="flex items-center flex-wrap md:flex-nowrap justify-center md:justify-between mt-8 text-gray-500">
+                <a href="#" className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
+                    <button className="flex items-center gap-6"><SiNextdotjs className="text-5xl"/> <span className="text-2xl font-bold">NextJs</span> </button>                     
+                </a>
+                <a href="#" className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
+                    <button className="flex items-center gap-6"><SiTailwindcss className="text-5xl"/> <span className="text-2xl font-bold">TailwindCSS</span> </button>                     
+                </a>
+                <a href="#" className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400">
+                    <button className="flex items-center gap-6"><SiPrisma className="text-5xl"/> <span className="text-2xl font-bold">PrismaIO</span> </button>                     
+                </a>
             </div>
-            <NewPost cookie={props.cookie} />
-          </div>
-        ) : null}
-      </div>
+        </div> 
+    </div>
+</section>
     </div>
   );
 };
@@ -73,12 +50,7 @@ const Home = (props: HomeInter) => {
 Home.getInitialProps = async (ctx: any) => {
   const cookie = ctx?.req?.headers?.cookie;
 
-  const { data } = await axios({
-    method: "GET",
-    url: "http://localhost:3000/api/posts",
-  });
   return {
-    thePosts: data,
     cookie: cookie,
   };
 };
