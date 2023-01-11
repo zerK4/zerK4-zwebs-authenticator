@@ -14,7 +14,9 @@ npm run dev
 ## Supports
 
 Has registration with email validation.
+
 Authentication.
+
 Authorization and protected routes(only for authenticated users)
 
 Profile creation after email is validated.
@@ -25,8 +27,7 @@ Dark mode implemented with Tailwind.
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first
-to discuss what you would like to change.
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 In case of anything you are more than welcome to email me and propose: sebastian.v.pavel@gmail.com
 
