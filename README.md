@@ -1,15 +1,34 @@
-NextJS Authentication project.
+# Authentication starter
 
-Supports Login, Register and logout.
-Created using PrismaIO, NextJS and TailwindCSS.
-Uses a local sqlite database.
+A project made to kickstart easier with the authentication systems that we need in our projects.
 
-Supports checks for email and username.
-Error handling client and server side.
+## Installation
 
-/api/auth -> route for authentication server side.
+Just clone it and then
 
-/auth -> route for authentication client side.
+```bash
+npm i || yarn
+npm run dev
+```
 
-DATABASE_URL="file:./databasename.db" - .env variable for database setup.
-JWT= secret token for JWT authentication.
+## Supports
+
+Has registration with email validation.
+Authentication.
+Authorization and protected routes(only for authenticated users)
+
+Profile creation after email is validated.
+Authentication store using zustand.
+
+Dark mode implemented with Tailwind.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first
+to discuss what you would like to change.
+
+In case of anything you are more than welcome to email me and propose: sebastian.v.pavel@gmail.com
+
+## License
+
+MIT
