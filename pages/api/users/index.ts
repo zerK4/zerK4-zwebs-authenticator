@@ -1,14 +1,22 @@
+/**
+ * ? User handling function.
+ * @author "Sebastian Pavel"
+ * @date January 2023
+ */
 import prisma from "../../../utils/prismaClient";
-import { NextApiRequest, NextApiResponse } from "next";
 import authenticator from "../../../utils/authenticator";
+import handler from "../../../utils/handler";
+import { UserType } from "../../../utils/interfaces/ClientInterface";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-  if (req.method === "GET") {
-    const comUsers = await prisma.user.findMany({
-    })
-    const users = comUsers.map(user => user.token ? { ...user, token: "" } : null)
-    res.status(200).json(users)
-
-  }
-}
+ export default authenticator(handler.get(async(req, res) => {
+  const comUsers: UserType[] = await prisma.user.findMany({
+    include: {
+      profile: true,
+      technology: true,
+      likes: true
+    }
+  })
+  const data = comUsers.map(user => user.token ? { ...user, token: "" } : null)
+  res.status(200).json({data: data})
+ }))

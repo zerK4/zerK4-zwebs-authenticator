@@ -1,3 +1,9 @@
+/**
+ * ? Logout function.
+ * @author "Sebastian Pavel"
+ * @date January 2023
+ */
+
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 

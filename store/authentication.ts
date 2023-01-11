@@ -1,17 +1,33 @@
-import create from "zustand";
-import { persist } from "zustand/middleware";
+/**
+ * ? Authentication store.
+ * * Creates the local storage for the authenticated user.
+ * * Removes the saved user on logout.
+ */
+import create, { StateCreator } from "zustand";
+import { persist, PersistOptions } from "zustand/middleware";
+import {AuthStoreType} from '../utils/interfaces/StoresInterface'
 
-const authStore = (set: any) => ({
-  userProfile: null,
+// ? Used to create the local storage for the authenticated user.
 
-  addUser: (user: any) => set({ userProfile: user }),
-  removeUser: () => set({ userProfile: null }),
-});
+  type MyPersist = (
+    config: StateCreator<AuthStoreType>,                                            
+    options: PersistOptions<AuthStoreType>                                          
+  ) => StateCreator<AuthStoreType>                                                  
+  const useAuthStore = create<AuthStoreType>(                                           
+    (persist as MyPersist)(                                                   
+      (set) => ({                                                             
+        userProfile: {
+          email: "",
+          firstName: "",
+          lastName: "",
+          validated: false,
+        },                                                     
+        authenticated: false,
+        addUser: (user) => set({ userProfile: user, authenticated: true }),
+        removeUser: () => set({ userProfile: undefined, authenticated: false }),                                                                    
+      }),                                                                     
+      { name: 'auth' }                                                  
+    )                                                                         
+  )
 
-const useAuthStore = create(
-  persist(authStore, {
-    name: "auth",
-  })
-);
-
-export default useAuthStore;
+  export default useAuthStore;

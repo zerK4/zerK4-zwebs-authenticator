@@ -1,3 +1,9 @@
+/**
+ * ? Login function.
+ * @author "Sebastian Pavel"
+ * @date January 2023
+ */
+
 import prisma from "../../../utils/prismaClient";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
@@ -15,6 +21,9 @@ export default async function login(req: NextApiRequest, res:NextApiResponse) {
         where: {
           email: document.email,
         },
+        include: {
+          profile: true,
+        }
       });
       /**
        * Once found the password is compared with the hash.
@@ -39,19 +48,32 @@ export default async function login(req: NextApiRequest, res:NextApiResponse) {
                 path: "/",
               })
             );
-            res.status(200).json({ person: {
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-            }, status: 200 });
+              if(user.confirmed) {
+                if(user.profile) {
+                  res.status(200).json({ person: {
+                    firstName: user.profile!.firstName,
+                    lastName: user.profile!.lastName,
+                    email: user.email,
+                    validated: true
+                  }, status: 200 });
+                } else {
+                  res.status(401).json({message: "Please create a profile!", need: "profile", token: user.confirmationToken})
+                }
+              } else {
+                res.status(401).json({ person: {
+                  validated: false,
+                }, status: 401 });
+              }
           } else {
+            console.log("hitting here");
+            
             res
-              .status(200)
-              .json({ message: "Please check your credentials!", status: 401 });
+              .status(404)
+              .json({ message: "Please check your credentials!", status: 404 });
           }
         });
       } else {
-        res.status(200).json({ message: "Account not found", status: 404 });
+        res.status(404).json({ message: "Account not found", status: 404 });
       }
     }
   }

@@ -1,3 +1,6 @@
+/**
+ * ? Function that verifies if the user is authenticated.
+ */
 import { verify } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
 

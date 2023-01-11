@@ -1,3 +1,7 @@
+/**
+ * ? Next api middleware.
+ * * Helps for http moethods simplification.
+ */
 import { NextApiRequest, NextApiResponse } from "next"
 import nextConnect from "next-connect"
 
