@@ -18,6 +18,7 @@ Authentication.
 Authorization and protected routes(only for authenticated users)
 
 Profile creation after email is validated.
+
 Authentication store using zustand.
 
 Dark mode implemented with Tailwind.
