@@ -104,7 +104,7 @@ export async function getServerSideProps(ctx: any) {
   try {
     const data = await axios({
       method: "POST",
-      url: "http://localhost:3000/api/auth/verification",
+      url: `${process.env.URL}/api/auth/verification`,
       data: {
         user: user,
         token: token,

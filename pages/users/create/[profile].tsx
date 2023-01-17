@@ -43,7 +43,7 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
       try {
         const data = await axios({
           method: "POST",
-          url: "http://localhost:3000/api/users/profile",
+          url: `${process.env.URL}/api/users/profile`,
           data: {
             token: token,
             firstName: firstName,
@@ -205,7 +205,7 @@ export async function getServerSideProps(ctx: any) {
   try {
     responseData = await axios({
       method: "GET",
-      url: "http://localhost:3000/api/users/profile",
+      url: `${process.env.URL}/api/users/profile`,
       data: {
         token: token,
       },

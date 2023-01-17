@@ -103,7 +103,7 @@ const Login: NextPage = ({ logged }: Logi) => {
   const verifier = async () => {
     const data = await axios({
       method: "PUT",
-      url: "http://localhost:3000/api/auth/register",
+      url: `${process.env.URL}/api/auth/register`,
       data: {
         email: email,
       },
