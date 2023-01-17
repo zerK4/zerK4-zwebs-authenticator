@@ -103,7 +103,7 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
         <div className="text-gray-300 mb-10 bg-slate-600 p-2 rounded-md">
           {error ? (
             <h3 className="text-red-500">
-              C'mon, just complete the fields! :D
+              C &apos; mon, just complete the fields! :D
             </h3>
           ) : success ? (
             <h3 className="text-lime-400">

@@ -140,7 +140,7 @@ const Login: NextPage = ({ logged }: Logi) => {
               Oooooh, so you did not validated the account yet.
             </h5>
             <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 ">
-              C'mon, not so hard, only open your email address and smash that
+              C &apos; mon, not so hard, only open your email address and smash that
               link so we can let you in.
             </p>
             <div className="flex gap-4 items-center">
