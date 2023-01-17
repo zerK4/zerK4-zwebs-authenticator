@@ -10,7 +10,6 @@ import { NextPage } from "next";
 import { AiFillHeart } from "react-icons/ai";
 import { SiNextdotjs, SiPrisma, SiTailwindcss } from "react-icons/si";
 import useAuthStore from "../store/authentication";
-import { AuthStoreType } from "../utils/interfaces/StoresInterface";
 
 type HomeInter = {
   cookie: any;
@@ -18,7 +17,7 @@ type HomeInter = {
   users: any;
 };
 const Home: NextPage<HomeInter> = (props) => {
-  const [user, setUser] = useState<Object>({} as AuthStoreType);
+  const [user, setUser] = useState<any>({});
   const { userProfile } = useAuthStore();
 
   useEffect(() => {
