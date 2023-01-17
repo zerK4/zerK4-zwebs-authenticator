@@ -7,7 +7,7 @@
 import prisma from "../../../utils/prismaClient";
 import { hash } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import {verifyEmail} from '../../../utils/email'
+import { verifyEmail } from '../../../utils/email'
 import { uuid } from 'uuidv4';
 
 export default async function register(req: NextApiRequest, res: NextApiResponse) {
@@ -66,19 +66,19 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
               name: document.username,
             });
           }
-/**
- * ? Function handling the verification of the email address.
- */
+          /**
+           * ? Function handling the verification of the email address.
+           */
           const verifier = {
             userEmail: document.email,
             userName: document.username,
             token: secret,
             subject: "Request to confirm email from zWebs",
             message: "Hey, follow this link in order to confirm your email address!",
-            link: `http://localhost:3000/verification/${document?.username}/${secret}/`,
+            link: `${process.env.URL}/verification/${document?.username}/${secret}/`,
             button: "Verify!"
           }
-        verifyEmail(verifier)
+          verifyEmail(verifier)
         });
 
       } else {
@@ -97,19 +97,19 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
       }
     })
 
-  const  document = {
-    userEmail: currentUser?.email,
+    const document = {
+      userEmail: currentUser?.email,
       userName: currentUser?.username,
       token: currentUser?.confirmationToken,
       subject: "Request to confirm email from zWebs",
-        message: "Hey, follow this link in order to confirm your email address!",
-        link: `http://localhost:3000/verification/${currentUser?.username}/${currentUser?.confirmationToken}/`,
-        button: "Verify!"
+      message: "Hey, follow this link in order to confirm your email address!",
+      link: `${process.env.URL}/verification/${currentUser?.username}/${currentUser?.confirmationToken}/`,
+      button: "Verify!"
     }
     console.log(document);
     verifyEmail(document)
 
-    res.status(200).json({ message: "Message sent!"})
-    
+    res.status(200).json({ message: "Message sent!" })
+
   }
 } 

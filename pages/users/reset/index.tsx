@@ -26,7 +26,7 @@ export default function ResetPassword() {
     try {
       const data = await axios({
         method: "POST",
-        url: `http://localhost:3000/api/auth/resetPassword`,
+        url: `${process.env.URL}/api/auth/resetPassword`,
         data: {
           email: email,
         },
