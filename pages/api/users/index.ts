@@ -10,12 +10,11 @@ import { UserType } from "../../../utils/interfaces/ClientInterface";
 
 
 export default authenticator(handler.get(async (req, res) => {
-  const comUsers: UserType[] = await prisma.user.findMany({
+  const comUsers: any = await prisma.user.findMany({
     include: {
       profile: true,
-      technology: true,
     }
   })
-  const data = comUsers.map(user => user.token ? { ...user, token: "" } : null)
+  const data = comUsers.map((user: any) => user.token ? { ...user, token: "" } : null)
   res.status(200).json({ data: data })
 }))
