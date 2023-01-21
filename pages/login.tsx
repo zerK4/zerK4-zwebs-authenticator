@@ -77,7 +77,6 @@ const Login: NextPage = ({ logged }: Logi) => {
         /**
          * ! Catching errors if there are any, in our case if the email is not validated or the user does not have a profile.
          */
-        console.log(err, "erro here");
         if (err.response.status === 401) {
           if (err.response.data?.need) {
             console.log("you need to create an profile");
@@ -108,7 +107,6 @@ const Login: NextPage = ({ logged }: Logi) => {
         email: email,
       },
     });
-    console.log(data);
   };
 
   /**

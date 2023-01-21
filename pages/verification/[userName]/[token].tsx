@@ -8,7 +8,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { NextPage } from "next";
 
@@ -24,15 +24,15 @@ const UserVerification: NextPage<Verification> = (props: Verification) => {
   const [createProfile, setCreateProfile] = useState<boolean>(false);
   const [scaleDown, setSDown] = useState<boolean>(false);
 
-  useEffect(() => {
-    setTimeout(() => {
-      router.push("/");
-    }, 5000);
-    setTimeout(() => {
-      setSDown(false);
-    }, 1000);
-    document.body.style.overflowX = "hidden";
-  }, [props.confirmation, scaleDown]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     router.push("/");
+  //   }, 5000);
+  //   setTimeout(() => {
+  //     setSDown(false);
+  //   }, 1000);
+  //   document.body.style.overflowX = "hidden";
+  // }, [props.confirmation, scaleDown]);
 
   const animatet: any = {
     x: createProfile ? -500 : 0,
@@ -101,18 +101,19 @@ export async function getServerSideProps(ctx: any) {
   const token = ctx.query.token;
   let alreadyConfirmed = false;
 
+  const URL = process.env.URL
+
   try {
     const data = await axios({
       method: "POST",
-      url: `${process.env.URL}/api/auth/verification`,
+      url: `${URL}/api/auth/verification`,
       data: {
         user: user,
         token: token,
       },
     });
-    console.log(data, "data here");
   } catch (e: any) {
-    if (e.response.status === 401) {
+    if (e?.response?.status === 401) {
       ctx?.res?.writeHead(302, {
         Location: `/users/create/${token}`,
       });

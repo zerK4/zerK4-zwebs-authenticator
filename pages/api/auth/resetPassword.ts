@@ -42,7 +42,6 @@ export default handler.post(async (req, res) => {
    * ? The put method helps to change the password once the data is sent from the frontend.
    */
   .put(async (req, res) => {
-    console.log(req.body);
     if (req.body.password !== "") {
       hash(req.body.password, 12, async (err, hash) => {
         if (err) {
