@@ -5,10 +5,8 @@
  */
 
 import axios from "axios";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { motion } from "framer-motion";
 import { NextPage } from "next";
 import Head from "next/head";
 
@@ -26,39 +24,14 @@ const UserVerification: NextPage<Verification> = (props: Verification) => {
       </Head>
       <div className="2xl:w-1/2 md:1/4 w-full">
         <div
-          className={`rounded-md container py-10 gap-14 flex flex-col items-center justify-center p-4 overflow-hidden`}
+          className={`rounded-md container gap-4 flex flex-col items-center justify-center p-4 overflow-hidden`}
         >
-          <div className="text-md text-gray-200 shadow-md shadow-black bg-slate-700 p-2 rounded-md">
-            Hi there, thanks for joining. <br /> We are sorry but we still need
-            few more information from you.
-            <br /> Just press on the button and enter the needed details.
+          <div className="text-md text-gray-200 p-2 rounded-md">
+            <h1 className="border-b-2 border-neutral-900 pb-2 mb-4 text-2xl">Hi there, thanks for joining.</h1> 
+            <p className="text-neutral-500">We still need
+            few more information from you.</p>
+            <p className="text-neutral-500">Just press on the button and enter the needed details.</p>
           </div>
-          <motion.div
-            transition={{
-              duration: 2,
-              type: "fade",
-              damping: 10,
-              stiffness: 100,
-            }}
-            initial={{
-              y: 100,
-              opacity: 0
-            }}
-            animate={{
-              y: 0,
-              opacity: 1
-            }}
-            className="h-[20rem] w-[20rem] rounded-lg relative"
-          >
-            <Image
-              src="/welcome.svg"
-              className="object-cover"
-              width={300}
-              height={300}
-              alt="Welcome image"
-              priority
-            />
-          </motion.div>
           <div className={`flex justify-center flex-col`}>
             <Link href={`/users/create/${props.token}`}>
               <button

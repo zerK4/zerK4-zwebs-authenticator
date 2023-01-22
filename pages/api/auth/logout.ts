@@ -4,10 +4,9 @@
  * @date January 2023
  */
 
-import cookie from "cookie";
-import { NextApiRequest, NextApiResponse } from "next";
+import handler from "../../../utils/handler";
 
-export default async function logout(req: NextApiRequest, res:NextApiResponse){
+export default handler.get(async (req, res) => {
   res.setHeader("Set-Cookie", [`auth=deleted; Max-Age=0; path=/`]);
   res.status(200).json({ message: "Logged out" });
-}
+})

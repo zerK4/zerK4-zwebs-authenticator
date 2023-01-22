@@ -38,14 +38,6 @@ const Register: NextPage = () => {
       : null;
   }, [password, email]);
 
-  const router = useRouter();
-  /**
-   *
-   * @param {*}
-   * Registration function, check if everything is completed.
-   * Making the post request after passing the initial step.
-   * Returns messages, if error, error is displayed on the screen using jsx.
-   */
   const register = async (e: any) => {
     e.preventDefault();
     setIsLoading(true);
@@ -97,7 +89,7 @@ const Register: NextPage = () => {
             duration: 2,
             type: "fade",
           }}
-          className="w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
+          className="w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full flex justify-center">
             <div className="relative w-full h-full max-w-2xl md:h-auto">
               <div className="relative bg-white rounded-lg shadow dark:container">
                 <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
