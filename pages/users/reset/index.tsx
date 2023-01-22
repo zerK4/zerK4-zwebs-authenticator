@@ -26,7 +26,7 @@ export default function ResetPassword() {
     try {
       const data = await axios({
         method: "POST",
-        url: `http://localhost:3000/api/auth/resetPassword`,
+        url: `/api/auth/resetPassword`,
         data: {
           email: email,
         },
@@ -34,10 +34,10 @@ export default function ResetPassword() {
       console.log(data);
       setSuccess("We have sent you an email.");
     } catch (error: any) {
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(error?.response?.data?.message);
       console.log(error);
     }
-    setIsLoading(false);
+        setIsLoading(false);
   };
 
   return (
@@ -76,7 +76,10 @@ export default function ResetPassword() {
         <div className="flex justify-between items-center">
           <motion.button
             onClick={(e) => sendReq(e)}
-            initial={{ x: -100, opacity: 0 }}
+            initial={{ 
+              x: -100, 
+              opacity: 0 
+            }}
             transition={{
               duration: 100,
               type: "spring",
@@ -87,7 +90,7 @@ export default function ResetPassword() {
               x: typing ? 0 : -100,
               opacity: typing ? 1 : 0,
             }}
-            className="mt-2 py-2 pr-10"
+            className="mt-2 py-2 pr-10 text-yellow-500/50 text-2xl hover:text-yellow-500 ease-in-out duration-300"
           >
             <AiOutlineSend />
           </motion.button>

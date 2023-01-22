@@ -7,46 +7,27 @@
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { NextPage } from "next";
+import Head from "next/head";
 
 type Verification = {
   createProfile: boolean;
   confirmation: any;
   token: any;
-  alreadyConfirmed: boolean;
 };
 
 const UserVerification: NextPage<Verification> = (props: Verification) => {
-  const router = useRouter();
-  const [createProfile, setCreateProfile] = useState<boolean>(false);
-  const [scaleDown, setSDown] = useState<boolean>(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      router.push("/");
-    }, 5000);
-    setTimeout(() => {
-      setSDown(false);
-    }, 1000);
-    document.body.style.overflowX = "hidden";
-  }, [props.confirmation, scaleDown]);
-
-  const animatet: any = {
-    x: createProfile ? -500 : 0,
-    position: createProfile ? "fixed" : "relative",
-    opacity: createProfile ? 0 : 1,
-  };
 
   return (
     <div className="h-screen justify-center w-full flex items-center">
+      <Head>
+        <title>Account verification</title>
+      </Head>
       <div className="2xl:w-1/2 md:1/4 w-full">
         <div
-          className={`rounded-md container py-10 gap-14 flex flex-col ${
-            createProfile ? "md:flex-row" : "md:flex-col"
-          } items-center justify-center p-4 overflow-hidden`}
+          className={`rounded-md container py-10 gap-14 flex flex-col items-center justify-center p-4 overflow-hidden`}
         >
           <div className="text-md text-gray-200 shadow-md shadow-black bg-slate-700 p-2 rounded-md">
             Hi there, thanks for joining. <br /> We are sorry but we still need
@@ -55,12 +36,19 @@ const UserVerification: NextPage<Verification> = (props: Verification) => {
           </div>
           <motion.div
             transition={{
-              duration: 100,
-              type: "spring",
+              duration: 2,
+              type: "fade",
               damping: 10,
               stiffness: 100,
             }}
-            animate={animatet}
+            initial={{
+              y: 50,
+              opacity: 0,
+            }}
+            animate={{
+              y: 0,
+              opacity: 1
+            }}
             className="h-[20rem] w-[20rem] rounded-lg relative"
           >
             <Image
@@ -75,9 +63,6 @@ const UserVerification: NextPage<Verification> = (props: Verification) => {
           <div className={`flex justify-center flex-col`}>
             <Link href={`/users/create/${props.token}`}>
               <button
-                onClick={() => {
-                  setSDown(true);
-                }}
                 className="contrast p-2 text-neutral-600 w-[20rem] rounded-md hover:ring-2 hover:ring-yellow-400"
               >
                 Create profile
@@ -97,8 +82,11 @@ const UserVerification: NextPage<Verification> = (props: Verification) => {
  */
 
 export async function getServerSideProps(ctx: any) {
-  const user = ctx.query.userName;
-  const token = ctx.query.token;
+  const { query: { userName: user } } = ctx
+  const { query: { token } } = ctx
+  const { res: { writeHead: writeHeadRedirect } } = ctx
+  const { res: { end: endResponse } } = ctx
+
   let alreadyConfirmed = false;
 
   try {
@@ -110,13 +98,12 @@ export async function getServerSideProps(ctx: any) {
         token: token,
       },
     });
-    console.log(data, "data here");
   } catch (e: any) {
     if (e.response.status === 401) {
-      ctx?.res?.writeHead(302, {
+      writeHeadRedirect(302, {
         Location: `/users/create/${token}`,
       });
-      ctx?.res?.end();
+      endResponse();
     }
   }
 
@@ -125,7 +112,6 @@ export async function getServerSideProps(ctx: any) {
       confirmation: "Congrats!",
       user: user,
       token: token,
-      alreadyConfirmed: alreadyConfirmed,
     },
   };
 }

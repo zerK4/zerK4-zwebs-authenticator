@@ -10,12 +10,15 @@ import { NextPage } from "next";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 type ProfileType = {
   token: string;
-  alreadyCreated: boolean;
 };
-const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
+
+const { env: { URL } } = process
+
+const CreateProfile: NextPage<ProfileType> = ({ token }) => {
   const router = useRouter();
   const [info, setInfo] = useState<boolean>(false);
   const [firstName, setFirstName] = useState<String>("");
@@ -43,7 +46,7 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
       try {
         const data = await axios({
           method: "POST",
-          url: "http://localhost:3000/api/users/profile",
+          url: `/api/users/profile`,
           data: {
             token: token,
             firstName: firstName,
@@ -52,7 +55,6 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
             jobTitle: jobTitle,
           },
         });
-        console.log(data);
         setFirstName("");
         setLastName("");
         setPhone("");
@@ -62,7 +64,7 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
           router.push("/login");
         }, 3000);
       } catch (e) {
-        console.log(e);
+        console.log(e, 'Got an error when sending profile data!');
       }
     } else {
       setError(true);
@@ -72,6 +74,11 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
+      <Head>
+        <title>
+          Profile creation
+        </title>
+      </Head>
       <motion.div
         initial={{ opacity: 0, x: 500 }}
         transition={{
@@ -198,35 +205,33 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
 };
 
 export async function getServerSideProps(ctx: any) {
-  const token = ctx.query.profile;
-  let responseData: string;
-  let alreadyCreated: boolean = false;
+  const { query: { profile: token } } = ctx
+  const { res: { writeHead: writeHeadRedirect } } = ctx
+  const { res: {end: endResponse } } = ctx
 
   try {
-    responseData = await axios({
+    const responseData = await axios({
       method: "GET",
-      url: "http://localhost:3000/api/users/profile",
+      url: `${URL}/api/users/profile`,
       data: {
         token: token,
       },
     });
-    alreadyCreated = false;
   } catch (e: any) {
-    if (e.response.status === 401) {
-      ctx?.res?.writeHead(302, {
+    const status = await e?.response?.status
+    if (status === 401) {
+      writeHeadRedirect(302, {
         Location: `/login`,
       });
-      ctx?.res?.end();
-      alreadyCreated = true;
+      endResponse();
     }
-    console.log(e, "error here");
+    console.error(e, "Something happened at create profile page! ", );
   }
 
   return {
     props: {
       confirmation: "Congrats!",
       token: token,
-      alreadyCreated: alreadyCreated,
     },
   };
 }

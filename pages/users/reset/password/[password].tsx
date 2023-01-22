@@ -39,7 +39,7 @@ const Password: NextPage<PasswordType> = ({ token }) => {
       try {
         const data = await axios({
           method: "PUT",
-          url: `http://localhost:3000/api/auth/resetPassword`,
+          url: `/api/auth/resetPassword`,
           data: {
             token: token,
             password: password,

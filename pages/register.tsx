@@ -86,7 +86,18 @@ const Register: NextPage = () => {
         className="w-full flex justify-center"
       >
         {created ? (
-          <div className="w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
+          <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          transition={{
+            duration: 2,
+            type: "fade",
+          }}
+          className="w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 md:h-full">
             <div className="relative w-full h-full max-w-2xl md:h-auto">
               <div className="relative bg-white rounded-lg shadow dark:container">
                 <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
@@ -115,7 +126,7 @@ const Register: NextPage = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         ) : (
           <form className="shadow-md dark:shadow-black rounded px-8 pt-6 w-full md:w-[25rem] pb-8 mb-4 dark:bg-neutral-900 dark:border  dark:border-black flex flex-col gap-2  bg-[#F2F2F2] shadow-[#181818]/30">
             {complete || someIssue ? (
@@ -170,7 +181,7 @@ const Register: NextPage = () => {
               </label>
             </div>
             {isLoading ? (
-              <div className="w-full flex justify-center mb-4">
+              <div className="w-full flex">
                 <div className="loader"></div>
               </div>
             ) : (

@@ -55,6 +55,7 @@ const Login: NextPage = ({ logged }: Logi) => {
 
   const loginHandler = async (e: any) => {
     e.preventDefault();
+    setisLoading(true)
     const document = {
       email: email,
       password: password,
@@ -96,6 +97,7 @@ const Login: NextPage = ({ logged }: Logi) => {
     } else {
       setComplete(true);
     }
+    setisLoading(false)
   };
   /**
    * ? Verified function that handles the server request in order to start the verification.
@@ -205,7 +207,7 @@ const Login: NextPage = ({ logged }: Logi) => {
               </label>
             </div>
             {isLoading ? (
-              <div className="flex justify-center">
+              <div className="flex">
                 <div className="loader"></div>
               </div>
             ) : (
