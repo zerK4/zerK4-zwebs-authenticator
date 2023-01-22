@@ -13,7 +13,6 @@ import { uuid } from 'uuidv4';
 export default async function register(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const document = await req.body;
-    console.log(req.body, "here");
     /**
      * ? Check if email already exists
      */
@@ -106,7 +105,6 @@ export default async function register(req: NextApiRequest, res: NextApiResponse
       link: `${process.env.URL}/verification/${currentUser?.username}/${currentUser?.confirmationToken}/`,
       button: "Verify!"
     }
-    console.log(document);
     verifyEmail(document)
 
     res.status(200).json({ message: "Message sent!" })

@@ -43,7 +43,7 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
       try {
         const data = await axios({
           method: "POST",
-          url: `${process.env.URL}/api/users/profile`,
+          url: `/api/users/profile`,
           data: {
             token: token,
             firstName: firstName,
@@ -52,7 +52,6 @@ const CreateProfile: NextPage<ProfileType> = ({ token, alreadyCreated }) => {
             jobTitle: jobTitle,
           },
         });
-        console.log(data);
         setFirstName("");
         setLastName("");
         setPhone("");
@@ -205,21 +204,20 @@ export async function getServerSideProps(ctx: any) {
   try {
     responseData = await axios({
       method: "GET",
-      url: `${process.env.URL}/api/users/profile`,
+      url: `/api/users/profile`,
       data: {
         token: token,
       },
     });
     alreadyCreated = false;
   } catch (e: any) {
-    if (e.response.status === 401) {
+    if (e?.response?.status === 401) {
       ctx?.res?.writeHead(302, {
         Location: `/login`,
       });
       ctx?.res?.end();
       alreadyCreated = true;
     }
-    console.log(e, "error here");
   }
 
   return {

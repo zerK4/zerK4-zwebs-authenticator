@@ -17,7 +17,7 @@ let sender = nodemailer.createTransport({
     }
 })
 
-export const verifyEmail = async ({userEmail, userName, token, subject, message, link, button}: any) => {
+export const verifyEmail = async ({ userEmail, userName, token, subject, message, link, button }: any) => {
     try {
         let info = await sender.sendMail({
             from: email,

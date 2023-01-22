@@ -10,7 +10,7 @@ import { sign } from "jsonwebtoken";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function login(req: NextApiRequest, res:NextApiResponse) {
+export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const document = req.body;
     /**
@@ -48,25 +48,27 @@ export default async function login(req: NextApiRequest, res:NextApiResponse) {
                 path: "/",
               })
             );
-              if(user.confirmed) {
-                if(user.profile) {
-                  res.status(200).json({ person: {
+            if (user.confirmed) {
+              if (user.profile) {
+                res.status(200).json({
+                  person: {
                     firstName: user.profile!.firstName,
                     lastName: user.profile!.lastName,
                     email: user.email,
                     validated: true
-                  }, status: 200 });
-                } else {
-                  res.status(401).json({message: "Please create a profile!", need: "profile", token: user.confirmationToken})
-                }
+                  }, status: 200
+                });
               } else {
-                res.status(401).json({ person: {
-                  validated: false,
-                }, status: 401 });
+                res.status(401).json({ message: "Please create a profile!", need: "profile", token: user.confirmationToken })
               }
+            } else {
+              res.status(401).json({
+                person: {
+                  validated: false,
+                }, status: 401
+              });
+            }
           } else {
-            console.log("hitting here");
-            
             res
               .status(404)
               .json({ message: "Please check your credentials!", status: 404 });
