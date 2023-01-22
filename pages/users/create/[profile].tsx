@@ -212,7 +212,7 @@ export async function getServerSideProps(ctx: any) {
   try {
     const responseData = await axios({
       method: "GET",
-      url: `${URL}/api/users/profile`,
+      url: `/api/users/profile`,
       data: {
         token: token,
       },
@@ -225,7 +225,6 @@ export async function getServerSideProps(ctx: any) {
       });
       endResponse();
     }
-    console.error(e, "Something happened at create profile page! ", );
   }
 
   return {

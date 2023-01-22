@@ -31,7 +31,6 @@ export default function ResetPassword() {
           email: email,
         },
       });
-      console.log(data);
       setSuccess("We have sent you an email.");
     } catch (error: any) {
       setErrorMessage(error?.response?.data?.message);

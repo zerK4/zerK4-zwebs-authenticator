@@ -19,7 +19,6 @@ type Verification = {
 };
 
 const UserVerification: NextPage<Verification> = (props: Verification) => {
-
   return (
     <div className="h-screen justify-center w-full flex items-center">
       <Head>
@@ -42,8 +41,8 @@ const UserVerification: NextPage<Verification> = (props: Verification) => {
               stiffness: 100,
             }}
             initial={{
-              y: 50,
-              opacity: 0,
+              y: 100,
+              opacity: 0
             }}
             animate={{
               y: 0,
@@ -89,17 +88,19 @@ export async function getServerSideProps(ctx: any) {
 
   let alreadyConfirmed = false;
 
+  const URL = process.env.URL
+
   try {
     const data = await axios({
       method: "POST",
-      url: "http://localhost:3000/api/auth/verification",
+      url: `${URL}/api/auth/verification`,
       data: {
         user: user,
         token: token,
       },
     });
   } catch (e: any) {
-    if (e.response.status === 401) {
+    if (e?.response?.status === 401) {
       writeHeadRedirect(302, {
         Location: `/users/create/${token}`,
       });

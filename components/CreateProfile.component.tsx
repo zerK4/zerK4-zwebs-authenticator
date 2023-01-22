@@ -25,11 +25,9 @@ const CreateProfile: NextComponentType<Prof> = ({
 
   const updateProfile = async (e: any) => {
     e.preventDefault();
-    console.log("hit here");
-
     const data = await axios({
       method: "POST",
-      url: "http://localhost:3000/api/users/profile",
+      url: `${process.env.URL}/api/users/profile`,
       data: {
         token: token,
         firstName: firstName,
@@ -38,7 +36,6 @@ const CreateProfile: NextComponentType<Prof> = ({
         jobTitle: jobTitle,
       },
     });
-    console.log(data);
   };
 
   return (
